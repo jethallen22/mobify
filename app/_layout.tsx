@@ -24,6 +24,11 @@ export default function RootLayout() {
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
       <Stack>
         <Stack.Screen name="index" options={{ headerShown: false }} />
+        <Stack.Screen name="discover" options={{ headerShown: false}} />
+        <Stack.Screen name="popular" options={{ headerShown: false}} />
+        <Stack.Screen name="now_playing" options={{ headerShown: false}} />
+        <Stack.Screen name="top_rated" options={{ headerShown: false}} />
+        <Stack.Screen name="upcoming" options={{ headerShown: false}} />
       </Stack>
       <StatusBar style="auto" />
     </ThemeProvider>

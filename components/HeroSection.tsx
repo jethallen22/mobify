@@ -1,5 +1,5 @@
-import { MovieData } from "@/types/types";
-import { tmdbPopularMovies } from "@/utils/utils";
+import { MovieCategoriesEnum, MovieData } from "@/types/types";
+import { tmdbCategoryMovies } from "@/utils/utils";
 import { isEmpty } from "lodash";
 import React, { useEffect, useState } from "react";
 import {
@@ -23,7 +23,7 @@ const HeroSection = ({ isAuthenticated }: HeroSectionProps) => {
   useEffect(() => {
     const fetchPopularMovies = async () => {
       try {
-        const data = await tmdbPopularMovies();
+        const data = await tmdbCategoryMovies(MovieCategoriesEnum.popular);
         if (!isEmpty(data.results)) {
           console.log(`data: ${JSON.stringify(data.results.length)}`);
           setPopularMovies(data.results);
