@@ -1,0 +1,16 @@
+export const INITIAL_MOVIE_DATA = {
+  adult: false,
+  backdrop_path: "../assets/images/mobify-logo.png",
+  genre_ids: [28, 12],
+  id: 12345,
+  original_language: "en",
+  original_title: "Movie Title",
+  overview: "This is a movie overview.",
+  popularity: 123.45,
+  poster_path: "../assets/images/mobify-logo.png",
+  release_date: "2023-10-01",
+  title: "Movie Title",
+  video: false,
+  vote_average: 7.5,
+  vote_count: 1000,
+};
