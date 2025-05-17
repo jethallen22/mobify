@@ -1,7 +1,10 @@
 import {
     AUTHENTICATION,
     DISCOVER_MOVIE,
+    NOW_PLAYING,
     POPULAR_MOVIE,
+    TOP_RATED,
+    UPCOMING,
 } from "@/constants/constants";
 
 const options = {
@@ -43,10 +46,27 @@ export const tmdbMovies = async () => {
   }
 };
 
-export const tmdbPopularMovies = async () => {
+export const tmdbCategoryMovies = async (category: string) => {
+  let categoryUrl = "";
+  switch (category) {
+    case "popular":
+      categoryUrl = POPULAR_MOVIE;
+      break;
+    case "top_rated":
+      categoryUrl = TOP_RATED;
+      break;
+    case "now_playing":
+      categoryUrl = NOW_PLAYING;
+      break;
+    case "upcoming":
+      categoryUrl = UPCOMING;
+      break;
+    case "discover":
+      categoryUrl = DISCOVER_MOVIE;
+  }
   const url =
     process.env.EXPO_PUBLIC_TMDB_API_URL +
-    POPULAR_MOVIE +
+    categoryUrl +
     "?language=en-US&page=1";
   const response = await fetch(url, options);
   try {
