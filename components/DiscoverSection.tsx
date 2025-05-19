@@ -1,4 +1,4 @@
-import { MovieData } from "@/types/types";
+import { MovieCategoriesEnum, MovieData } from "@/types/types";
 import React from "react";
 import { View } from "react-native";
 import MovieItem from "./MovieItem";
@@ -10,7 +10,14 @@ const DiscoverSection = ({ movies }: DiscoverSectionProps) => {
   return (
     <View>
       {movies.map(
-        (movie, index) => index < 10 && <MovieItem key={index} movie={movie} />
+        (movie, index) =>
+          index < 10 && (
+            <MovieItem
+              key={index}
+              movie={movie}
+              category={MovieCategoriesEnum.discover}
+            />
+          )
       )}
     </View>
   );

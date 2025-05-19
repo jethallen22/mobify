@@ -1,9 +1,11 @@
+import { useMovieStore } from "@/hooks/stores/useMovieStores";
 import { MovieData } from "@/types/types";
-import { Link } from "expo-router";
+import { Link, RelativePathString, router } from "expo-router";
 import { isEmpty } from "lodash";
 import React from "react";
 import {
     Image,
+    Pressable,
     ScrollView,
     StyleSheet,
     Text,
@@ -16,25 +18,36 @@ interface MovieCarouselProps {
   category: string;
 }
 
-const MovieCarousel = ({ movies, category}: MovieCarouselProps) => {
+const MovieCarousel = ({ movies, category }: MovieCarouselProps) => {
+  const setMovie = useMovieStore((state) => state.setMovie);
+  const { fetchVideos } = useMovieStore();
   return (
     <View style={styles.container}>
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
         {movies.map((movie, index) => (
-          <Image
-            source={{
-              uri: !isEmpty(movie)
-                ? process.env.EXPO_PUBLIC_TMDB_IMAGE_URL + movie?.poster_path
-                : "",
+          <Pressable
+            onPress={() => {
+              setMovie(movie);
+              fetchVideos(movie.id);
+              router.push(`/${category}/${movie.id}` as RelativePathString);
             }}
-            style={styles.background}
-            resizeMode="cover"
             key={index}
-          />
+          >
+            <Image
+              source={{
+                uri: !isEmpty(movie)
+                  ? process.env.EXPO_PUBLIC_TMDB_IMAGE_URL + movie?.poster_path
+                  : "",
+              }}
+              style={styles.background}
+              resizeMode="cover"
+              key={index}
+            />
+          </Pressable>
         ))}
         <View style={styles.navButtonContainer}>
           <TouchableOpacity style={styles.navButton}>
-            <Link href={`/${category}`}>
+            <Link href={`/${category}` as RelativePathString}>
               <Text style={styles.navButtonText}>›</Text>
             </Link>
           </TouchableOpacity>

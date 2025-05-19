@@ -1,8 +1,10 @@
 import {
     AUTHENTICATION,
     DISCOVER_MOVIE,
+    MOVIE,
     NOW_PLAYING,
     POPULAR_MOVIE,
+    SEARCH_MOVIE,
     TOP_RATED,
     UPCOMING,
 } from "@/constants/constants";
@@ -46,7 +48,7 @@ export const tmdbMovies = async () => {
   }
 };
 
-export const tmdbCategoryMovies = async (category: string) => {
+export const tmdbCategoryMovies = async (category: string, pageNumber: number) => {
   let categoryUrl = "";
   switch (category) {
     case "popular":
@@ -67,7 +69,7 @@ export const tmdbCategoryMovies = async (category: string) => {
   const url =
     process.env.EXPO_PUBLIC_TMDB_API_URL +
     categoryUrl +
-    "?language=en-US&page=1";
+    "?language=en-US&page=" + pageNumber;
   const response = await fetch(url, options);
   try {
     if (response) {
@@ -79,3 +81,35 @@ export const tmdbCategoryMovies = async (category: string) => {
     console.error(err);
   }
 };
+
+export const tmdbMovieTrailer = async (movieId: number) => {
+  const url =
+    process.env.EXPO_PUBLIC_TMDB_API_URL +
+    `${MOVIE}/${movieId}/videos?language=en-US`;
+  const response = await fetch(url, options);
+  try {
+    if (response) {
+      return response.json();
+    } else {
+      console.error("Response is null");
+    }
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+export const tmdbSearchMovies = async (query: string, pageNumber: number) => {
+  const url =
+    process.env.EXPO_PUBLIC_TMDB_API_URL +
+    `${SEARCH_MOVIE}?query=${query}&language=en-US&page=${pageNumber}&include_adult=false`;
+  const response = await fetch(url, options);
+  try {
+    if (response) {
+      return response.json();
+    } else {
+      console.error("Response is null");
+    }
+  } catch (err) {
+    console.error(err);
+  }
+}
