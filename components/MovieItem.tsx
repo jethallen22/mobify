@@ -1,33 +1,46 @@
+import { useMovieStore } from "@/hooks/stores/useMovieStores";
 import { MovieData } from "@/types/types";
+import { RelativePathString, router } from "expo-router";
 import React from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 
 interface DiscoverItemProps {
   movie: MovieData;
+  category: string;
 }
 
-const MovieItem = ({ movie }: DiscoverItemProps) => {
+const MovieItem = ({ movie, category }: DiscoverItemProps) => {
+  const setMovie = useMovieStore((state) => state.setMovie);
+  const { fetchVideos } = useMovieStore();
   return (
-    <View>
-      <View style={styles.container}>
-        <Image
-          source={{
-            uri: process.env.EXPO_PUBLIC_TMDB_IMAGE_URL + movie?.poster_path,
-          }}
-          style={styles.image}
-          resizeMode="cover"
-        />
-        <View style={styles.textContainer}>
-          <Text style={styles.title} numberOfLines={1}>
-            {movie.title}
-          </Text>
-          <Text style={styles.overview} numberOfLines={4}>
-            {movie.overview}
-          </Text>
-          <Text numberOfLines={1}>{movie.release_date}</Text>
+    <Pressable
+      onPress={() => {
+        setMovie(movie);
+        fetchVideos(movie.id);
+        router.push(`/${category}/${movie.id}` as RelativePathString);
+      }}
+    >
+      <View>
+        <View style={styles.container}>
+          <Image
+            source={{
+              uri: process.env.EXPO_PUBLIC_TMDB_IMAGE_URL + movie?.poster_path,
+            }}
+            style={styles.image}
+            resizeMode="cover"
+          />
+          <View style={styles.textContainer}>
+            <Text style={styles.title} numberOfLines={1}>
+              {movie.title}
+            </Text>
+            <Text style={styles.overview} numberOfLines={4}>
+              {movie.overview}
+            </Text>
+            <Text numberOfLines={1}>{movie.release_date}</Text>
+          </View>
         </View>
       </View>
-    </View>
+    </Pressable>
   );
 };
 
@@ -44,7 +57,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     marginRight: 8,
   },
-  textContainer:{
+  textContainer: {
     flex: 1,
   },
   title: {

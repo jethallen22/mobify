@@ -1,8 +1,8 @@
 import { useMovieStore } from "@/hooks/stores/useMovieStores";
-import { Link } from "expo-router";
+import { Link, RelativePathString } from "expo-router";
 import { isEqual } from "lodash";
 import React, { useEffect } from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import DiscoverSection from "./DiscoverSection";
 import MovieCarousel from "./MovieCarousel";
 
@@ -51,7 +51,7 @@ const MovieSection = ({ isAuthenticated }: MovieSectionProps) => {
   // Fetch popular movies from TMDB API
   useEffect(() => {
     if (isAuthenticated) {
-      fetchMovies();
+      fetchMovies(1);
     }
   }, [isAuthenticated]);
 
@@ -60,19 +60,13 @@ const MovieSection = ({ isAuthenticated }: MovieSectionProps) => {
       {movieCategories.map(
         (category, index) =>
           category.movies.length > 0 && (
-            <>
+            <View key={index}>
               <View key={category.id} style={styles.cateogryContainer}>
                 <View style={styles.categoryTitleContainer}>
                   <Text style={styles.categoryTitle}>{category.title}</Text>
-                  <Pressable
-                    onPress={() => {
-                      console.log(`Pressed ${category.title}`);
-                    }}
-                  >
-                    <Link href={`/${category.category}`}>
-                      <Text>See all</Text>
-                    </Link>
-                  </Pressable>
+                  <Link href={`/${category.category}` as RelativePathString}>
+                    <Text>See all</Text>
+                  </Link>
                 </View>
                 <MovieCarousel
                   movies={category.movies}
@@ -84,15 +78,9 @@ const MovieSection = ({ isAuthenticated }: MovieSectionProps) => {
                 <View>
                   <View style={styles.categoryTitleContainer}>
                     <Text style={styles.categoryTitle}>Discover</Text>
-                    <Pressable
-                      onPress={() => {
-                        console.log(`Pressed ${index}`);
-                      }}
-                    >
-                      <Link href={`/discover`}>
-                        <Text>See all</Text>
-                      </Link>
-                    </Pressable>
+                    <Link href={`/discover`}>
+                      <Text>See all</Text>
+                    </Link>
                   </View>
                   <DiscoverSection movies={discover.slice(0, 4)} />
                 </View>
@@ -103,7 +91,7 @@ const MovieSection = ({ isAuthenticated }: MovieSectionProps) => {
                   <DiscoverSection movies={discover.slice(5, 9)} />
                 </View>
               )}
-            </>
+            </View>
           )
       )}
     </View>

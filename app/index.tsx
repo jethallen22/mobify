@@ -1,4 +1,3 @@
-import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
 import MovieSection from "@/components/MovieSection";
 import { tmdbAuthentication } from "@/utils/utils";
@@ -27,7 +26,7 @@ const index = () => {
         <ScrollView>
           <View>
             <SafeAreaView />
-            <Header />
+            {/* <Header /> */}
             <HeroSection isAuthenticated={isAuthenticated} />
             <MovieSection isAuthenticated={isAuthenticated} />
           </View>

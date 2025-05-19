@@ -1,9 +1,12 @@
+import { useMovieStore } from "@/hooks/stores/useMovieStores";
 import { MovieCategoriesEnum, MovieData } from "@/types/types";
 import { tmdbCategoryMovies } from "@/utils/utils";
+import { RelativePathString, router } from "expo-router";
 import { isEmpty } from "lodash";
 import React, { useEffect, useState } from "react";
 import {
     ImageBackground,
+    Pressable,
     StyleSheet,
     Text,
     TouchableOpacity,
@@ -15,6 +18,7 @@ interface HeroSectionProps {
 }
 
 const HeroSection = ({ isAuthenticated }: HeroSectionProps) => {
+  const { setMovie, fetchVideos } = useMovieStore();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [popularMovies, setPopularMovies] = useState<MovieData[]>([]);
   const currentSlide = popularMovies[currentIndex];
@@ -23,9 +27,8 @@ const HeroSection = ({ isAuthenticated }: HeroSectionProps) => {
   useEffect(() => {
     const fetchPopularMovies = async () => {
       try {
-        const data = await tmdbCategoryMovies(MovieCategoriesEnum.popular);
+        const data = await tmdbCategoryMovies(MovieCategoriesEnum.popular, 1);
         if (!isEmpty(data.results)) {
-          console.log(`data: ${JSON.stringify(data.results.length)}`);
           setPopularMovies(data.results);
         }
       } catch (err: any) {
@@ -33,7 +36,6 @@ const HeroSection = ({ isAuthenticated }: HeroSectionProps) => {
       }
     };
 
-    console.log(isAuthenticated);
     isAuthenticated && fetchPopularMovies();
   }, [isAuthenticated]);
 
@@ -51,7 +53,15 @@ const HeroSection = ({ isAuthenticated }: HeroSectionProps) => {
   return (
     <>
       {isAuthenticated ? (
-        <>
+        <Pressable
+          onPress={() => {
+            setMovie(currentSlide);
+            fetchVideos(currentSlide.id);
+            router.push(
+              `/${MovieCategoriesEnum.popular}/${currentSlide?.id}` as RelativePathString
+            );
+          }}
+        >
           <ImageBackground
             source={{
               uri: !isEmpty(popularMovies)
@@ -93,7 +103,7 @@ const HeroSection = ({ isAuthenticated }: HeroSectionProps) => {
               </>
             ) : undefined}
           </ImageBackground>
-        </>
+        </Pressable>
       ) : undefined}
     </>
   );
