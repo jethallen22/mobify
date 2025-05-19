@@ -1,50 +1,61 @@
-# Welcome to your Expo app 👋
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+# MOBIFY
 
-## Get started
+A mobile movie app using React Native with Expo. The app will display a list of movies and allow users to view detailed information about each one. 
 
-1. Install dependencies
+- The app uses React Expo router to handle screen transitions and fetch movie data from TMDB API.
 
-   ```bash
-   npm install
-   ```
+- Integrated a state management library called Zustand to handle global variables.
 
-2. Start the app
+- Integrated react-native-webview library to handle video play.
 
-   ```bash
-   npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
+## Example Environtment Variables Configurations
 
 ```bash
-npm run reset-project
+    EXPO_PUBLIC_TMDB_API_KEY=
+    EXPO_PUBLIC_TMDB_API_TOKEN=
+    EXPO_PUBLIC_TMDB_API_URL=
+    EXPO_PUBLIC_TMDB_IMAGE_URL=
+    EXPO_PUBLIC_TMDB_AUTHORIZE_URL=
+    EXPO_PUBLIC_YOUTUBE_EMBED_URL=
 ```
+## Installation
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+How to install and run Mobify app locally.
 
-## Learn more
+1. Clone the project.
+```bash
+    git clone https://github.com/jethallen22/mobify.git
+```
+2. Navigate through the project directory.
+```bash
+    cd mobify
+```
+3. Switch branch.
+```bash
+    git checkout development
+```
+4. Pull the latest development branch.
+```bash
+    git pull origin development
+```
+5. Install the dependencies
+```bash
+    npm install
+```
+6. Run the expo app.
+```bash
+    npx expo start
+```
+7. Run the app.
+```bash
+› Press a │ open Android
+› Press i │ open iOS simulator
+```
+## Scope and Limitation
 
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+- Due to time constraint I've decided to make the app's UI simple yet visually appealing to the user without neglecting the overall experience of the user
+- I've decided to limit the app only to browsing of list of movies and viewing of viewing of movie details
+- I've implemented zustand for a better state management library
+- It took a while for me to get the hang of dynamic expo routing
+- I've implemented a react-native-webview to allow user to play the trailer or video without leaving the application
